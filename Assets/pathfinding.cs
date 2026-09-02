@@ -4,7 +4,8 @@ using UnityEngine.AI;
 public class RandomWander : MonoBehaviour
 {
     public float wanderRadius = 10f;      // How far the agent can roam
-    public float wanderInterval = 3f;     // How often it picks a new destination
+    public float wanderInterval = 3f;
+    public Transform playerloc;     // How often it picks a new destination
 
     private NavMeshAgent agent;
     private float timer;
