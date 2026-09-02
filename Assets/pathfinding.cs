@@ -1,42 +1,117 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RandomWander : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
-    public float wanderRadius = 10f;      // How far the agent can roam
-    public float wanderInterval = 3f;
-    public Transform playerloc;     // How often it picks a new destination
+    [Header("References")]
+    public Transform player;
+    public Transform homePosition;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
+    [Header("Settings")]
+    public float sightRange = 15f;
+    public float sightAngle = 60f;
+    public float shootInterval = 1f;
+    public float wanderRadius = 10f;
+    public float lostSightTime = 3f;
 
     private NavMeshAgent agent;
-    private float timer;
+    private float shootTimer = 0f;
+    private float lostTimer = 0f;
+    private bool playerInSight = false;
 
     void Start()
     {
+        
         agent = GetComponent<NavMeshAgent>();
-        timer = wanderInterval;
+        Wander();
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
 
-        if (timer >= wanderInterval)
+        DetectPlayer();
+
+        if (playerInSight)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, wanderRadius);
-            agent.SetDestination(newPos);
-            timer = 0;
+            lostTimer = 0f;
+            ShootPlayer();
+            agent.SetDestination(player.position);
+        }
+        else
+        {
+            lostTimer += Time.deltaTime;
+
+            if (lostTimer >= lostSightTime)
+            {
+                agent.SetDestination(homePosition.position);
+            }
+            else
+            {
+                if (agent.remainingDistance < 1f)
+                    Wander();
+            }
         }
     }
 
-    // Picks a random valid point on the NavMesh
-    public static Vector3 RandomNavSphere(Vector3 origin, float distance)
+    // -----------------------------
+    // DETECT PLAYER
+    // -----------------------------
+    void DetectPlayer()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * distance;
-        randomDirection += origin;
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
 
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(randomDirection, out navHit, distance, NavMesh.AllAreas);
+        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+        float distance = Vector3.Distance(transform.position, player.position);
 
-        return navHit.position;
+        if (angle < sightAngle && distance < sightRange)
+        {
+            // Raycast to check line of sight
+            if (Physics.Raycast(transform.position + Vector3.up, dirToPlayer, out RaycastHit hit, sightRange))
+            {
+                if (hit.transform == player)
+                {
+                    playerInSight = true;
+                    return;
+                }
+            }
+        }
+
+        playerInSight = false;
+    }
+
+    // -----------------------------
+    // SHOOT PLAYER
+    // -----------------------------
+    void ShootPlayer()
+    {
+        shootTimer += Time.deltaTime;
+
+        if (shootTimer >= shootInterval)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+            // Give the bullet forward velocity
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
+            Vector3 dir = (player.position - firePoint.position).normalized;
+            rb.linearVelocity = dir * 20f;
+
+            shootTimer = 0f;
+        }
+    }
+
+    // -----------------------------
+    // WANDER RANDOMLY
+    // -----------------------------
+    void Wander()
+    {
+        Vector3 randomDir = Random.insideUnitSphere * wanderRadius;
+        randomDir += transform.position;
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDir, out hit, wanderRadius, NavMesh.AllAreas);
+
+        agent.SetDestination(hit.position);
     }
 }
