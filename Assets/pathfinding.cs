@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -15,15 +17,20 @@ public class EnemyAI : MonoBehaviour
     public float shootInterval = 1f;
     public float wanderRadius = 10f;
     public float lostSightTime = 3f;
+    
 
     private NavMeshAgent agent;
     private float shootTimer = 0f;
     private float lostTimer = 0f;
     private bool playerInSight = false;
+    public Animator animator;
+    
+    private bool animationTriggered = false;
 
     void Start()
     {
-        
+        Animator animator = GetComponentInChildren<Animator>();
+
         agent = GetComponent<NavMeshAgent>();
         Wander();
     }
@@ -37,7 +44,10 @@ public class EnemyAI : MonoBehaviour
         {
             lostTimer = 0f;
             ShootPlayer();
-            agent.SetDestination(player.position);
+
+            
+
+            //agent.SetDestination(player.position);
         }
         else
         {
@@ -45,6 +55,8 @@ public class EnemyAI : MonoBehaviour
 
             if (lostTimer >= lostSightTime)
             {
+                animationmethod();
+
                 agent.SetDestination(homePosition.position);
             }
             else
@@ -106,6 +118,8 @@ public class EnemyAI : MonoBehaviour
     // -----------------------------
     void Wander()
     {
+        animationmethod();
+
         Vector3 randomDir = Random.insideUnitSphere * wanderRadius;
         randomDir += transform.position;
 
@@ -113,5 +127,26 @@ public class EnemyAI : MonoBehaviour
         NavMesh.SamplePosition(randomDir, out hit, wanderRadius, NavMesh.AllAreas);
 
         agent.SetDestination(hit.position);
+    }
+    void animationmethod() {
+        if (!animationTriggered)
+        {
+            animator.SetTrigger("WalkingTrigger");
+            animationTriggered = true;
+            RunAfterDelay();
+        }
+    }
+    public void RunAfterDelay()
+    {
+        StartCoroutine(DoSomethingAfterTime(3f)); // runs after 3 seconds
+    }
+
+    IEnumerator DoSomethingAfterTime(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Code that runs after the delay
+        animationTriggered = false;
+        Debug.Log("animationtriggered set to true");
     }
 }
