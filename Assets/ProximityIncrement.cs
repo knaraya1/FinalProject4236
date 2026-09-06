@@ -5,7 +5,7 @@ public class ProximityIncrement : MonoBehaviour
     public string targetTag = "Enemy";   // tag to check for
     public float detectionRange = 50f;
     public float value = 0f;
-    public float incrementRate = 1f;
+    public float incrementRate = 2f;
     public GameObject CylinderObj;
 
     private Transform target;
@@ -28,7 +28,7 @@ public class ProximityIncrement : MonoBehaviour
         {
             Health yes = CylinderObj.GetComponent<Health>();
             yes.objcurrentHealth += incrementRate * Time.deltaTime;
-            Debug.Log("isnear");
+          //  Debug.Log("isnear");
         }
     }
 }

@@ -15,26 +15,29 @@ public class Health : MonoBehaviour
     }
     void Update()
     {
-         
+         if (objcurrentHealth > 100) 
+         {
+            objcurrentHealth = 100;
+         }
         
-            cylinder1.GetComponent<ColorChanger>().value = (objcurrentHealth/100);
-        
-      
-        
-            cylinder2.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.25f);
-        
-      
-        
-            cylinder3.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.5f);
-        
-    
-            cylinder4.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.75f);
-        
+        cylinder1.GetComponent<ColorChanger>().value = (objcurrentHealth/100);
+
+
+
+        cylinder2.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.25f);
+
+
+
+        cylinder3.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.5f);
+
+
+        cylinder4.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.75f);
+
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collided with: " + other.gameObject.name);
+        //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.CompareTag("PlayerBullet")) {
             TakeDamage(1);
         }
