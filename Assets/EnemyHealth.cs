@@ -4,6 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 50;
     private int currentHealth;
+    public GameObject Manager;
 
     void Start()
     {
@@ -37,5 +38,9 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log("Enemy died!");
         Destroy(gameObject);
+
+        SimpleSpawner i = Manager.GetComponent<SimpleSpawner>();
+        i.numEnemies1 -= 1;
+
     }
 }

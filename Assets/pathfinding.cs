@@ -24,8 +24,13 @@ public class EnemyAI : MonoBehaviour
     private float lostTimer = 0f;
     private bool playerInSight = false;
     public Animator animator;
+    public Animator animator2;
     
     private bool animationTriggered = false;
+    private bool animation2Triggered = false;
+
+    public GameObject targetObject;
+    public GameObject targetObject2;
 
     void Start()
     {
@@ -43,11 +48,12 @@ public class EnemyAI : MonoBehaviour
         if (playerInSight)
         {
             lostTimer = 0f;
+
+            Vector3 lookPos = player.transform.position - transform.position;
+            lookPos.y = 0;
+            transform.rotation = Quaternion.LookRotation(lookPos);
+
             ShootPlayer();
-
-            
-
-            //agent.SetDestination(player.position);
         }
         else
         {
@@ -98,6 +104,8 @@ public class EnemyAI : MonoBehaviour
     // -----------------------------
     void ShootPlayer()
     {
+        animationmethod2();
+
         shootTimer += Time.deltaTime;
 
         if (shootTimer >= shootInterval)
@@ -131,11 +139,25 @@ public class EnemyAI : MonoBehaviour
     void animationmethod() {
         if (!animationTriggered)
         {
+            targetObject.SetActive(true);
+            targetObject2.SetActive(false);
             animator.SetTrigger("WalkingTrigger");
             animationTriggered = true;
             RunAfterDelay();
         }
     }
+
+    void animationmethod2() {
+        if (!animation2Triggered)
+        {
+            targetObject2.SetActive(true);
+            targetObject.SetActive(false);
+            animator2.SetTrigger("ShootTrigger");
+            animation2Triggered = true;
+            RunAfterDelay2();
+        }
+    }
+
     public void RunAfterDelay()
     {
         StartCoroutine(DoSomethingAfterTime(3f)); // runs after 3 seconds
@@ -149,4 +171,20 @@ public class EnemyAI : MonoBehaviour
         animationTriggered = false;
         Debug.Log("animationtriggered set to true");
     }
+
+    public void RunAfterDelay2()
+    {
+        StartCoroutine(DoSomethingAfterTime2(3f)); // runs after 3 seconds
+    }
+
+    IEnumerator DoSomethingAfterTime2(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Code that runs after the delay
+        animation2Triggered = false;
+        Debug.Log("animation2triggered set to true");
+    }
+
+
 }
