@@ -16,17 +16,26 @@ public class Health : MonoBehaviour
     }
     void Update()
     {
-         if (objcurrentHealth > 100f) 
-         {
+        if (objcurrentHealth >= 100f) 
+        {
             objcurrentHealth = 100f;
-         }
-        
+        }
+
+        if (objcurrentHealth < 100)
+        {
+            cylinder1.GetComponent<ColorChanger>().value = (1f);
+            cylinder2.GetComponent<ColorChanger>().value = (1f);
+            cylinder3.GetComponent<ColorChanger>().value = (1f);
+            cylinder4.GetComponent<ColorChanger>().value = (1f);
+        }
 
         if (objcurrentHealth < 90f)
         {
             cylinder1.GetComponent<ColorChanger>().value = (.75f);
+            cylinder2.GetComponent<ColorChanger>().value = (1f);
+            cylinder3.GetComponent<ColorChanger>().value = (1f);
+            cylinder4.GetComponent<ColorChanger>().value = (1f);
         }
-        
 
         if (objcurrentHealth < 75f) 
         {
@@ -36,7 +45,6 @@ public class Health : MonoBehaviour
             cylinder4.GetComponent<ColorChanger>().value = (.75f);
         }
 
-
         if (objcurrentHealth < 50f)
         {
             cylinder1.GetComponent<ColorChanger>().value = (.3f);
@@ -44,7 +52,6 @@ public class Health : MonoBehaviour
             cylinder2.GetComponent<ColorChanger>().value = (.3f);
             cylinder4.GetComponent<ColorChanger>().value = (.5f);
         }
-
         if (objcurrentHealth < 25f)
         {
             cylinder1.GetComponent<ColorChanger>().value = (0f);
@@ -52,6 +59,8 @@ public class Health : MonoBehaviour
             cylinder2.GetComponent<ColorChanger>().value = (0f);
             cylinder4.GetComponent<ColorChanger>().value = (0f);
         }
+
+            
     }
 
     void OnTriggerEnter(Collider other)

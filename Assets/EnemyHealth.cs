@@ -5,6 +5,9 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 50;
     private int currentHealth;
     public GameObject Manager;
+    public GameObject prefabToSpawn;   // The object you want to spawn
+    public Transform spawnPoint;
+    public Transform enemyTransform;
 
     void Start()
     {
@@ -37,10 +40,15 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Enemy died!");
-        Destroy(gameObject);
+        
 
         SimpleSpawner i = Manager.GetComponent<SimpleSpawner>();
         i.numEnemies1 -= 1;
+        Vector3 pos = spawnPoint.position;
+        pos.y = 5.5f;
 
+        Instantiate(prefabToSpawn, pos, enemyTransform.rotation);
+        Destroy(gameObject);
+        //i.numStars += 1;
     }
 }

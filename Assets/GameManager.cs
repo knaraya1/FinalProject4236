@@ -6,6 +6,7 @@ public class SimpleSpawner : MonoBehaviour
     public GameObject prefabToSpawn;   // The object/prefab you want to spawn
     public Transform[] spawnPoints;
     public int numEnemies1;
+    public int numStars;
 
 
     public float delayTime = 2f;      // time before the action runs
