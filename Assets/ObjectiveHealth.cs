@@ -15,24 +15,29 @@ public class Health : MonoBehaviour
     }
     void Update()
     {
-         if (objcurrentHealth > 100) 
+         if (objcurrentHealth > 100f) 
          {
-            objcurrentHealth = 100;
+            objcurrentHealth = 100f;
          }
         
-        cylinder1.GetComponent<ColorChanger>().value = (objcurrentHealth/100);
+        float cyl1 = cylinder1.GetComponent<ColorChanger>().value = (objcurrentHealth/100f);
 
 
-
-        cylinder2.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.25f);
-
-
-
-        cylinder3.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.5f);
+        if (objcurrentHealth > 75f) 
+        {
+            cylinder2.GetComponent<ColorChanger>().value = ((cyl1 - 0.25f));
+        }
 
 
-        cylinder4.GetComponent<ColorChanger>().value = ((objcurrentHealth/100)+0.75f);
+        if (objcurrentHealth > 50f)
+        {
+            cylinder3.GetComponent<ColorChanger>().value = ((cyl1 - 0.5f));
+        }
 
+        if (objcurrentHealth > 25f)
+        {
+            cylinder4.GetComponent<ColorChanger>().value = ((cyl1 - 0.75f));
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -50,7 +55,7 @@ public class Health : MonoBehaviour
         objcurrentHealth -= amount;
         Debug.Log(gameObject.name + " Health: " + objcurrentHealth);
 
-        if (objcurrentHealth <= 0)
+        if (objcurrentHealth <= 0f)
         {
             Die();
         }

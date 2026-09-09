@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private float xRotation = 0f;
     private Vector3 velocity;
+    private float groundedTimer = 0f;
 
     void Start()
     {
@@ -25,6 +26,10 @@ public class PlayerController : MonoBehaviour
     {
         LookAround();
         MovePlayer();
+
+       // if (controller.isGrounded) {
+       //     Debug.Log("Is grounded");
+       // }
     }
 
     void LookAround()
@@ -46,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal"); // A/D
         float z = Input.GetAxis("Vertical");   // W/S
+        
 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * moveSpeed * Time.deltaTime);
@@ -54,8 +60,19 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f; // small downward force to keep grounded
 
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+        if (controller.isGrounded)
+        {
+            groundedTimer = 0.1f;
+            Debug.Log("grounded");
+        } // small buffer window
+        else
+            groundedTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Space) && groundedTimer > 0f)
+        {
+            Debug.Log("jumping");                                   
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
 
         // Gravity
         velocity.y += gravity * Time.deltaTime;
