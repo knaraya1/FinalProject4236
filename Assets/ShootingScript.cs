@@ -51,6 +51,6 @@ public class ShootingScript : MonoBehaviour
         onCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         onCooldown = false;
-        Debug.Log("Cooldown finished!");
+        //Debug.Log("Cooldown finished!");
     }
 }

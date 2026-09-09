@@ -169,7 +169,7 @@ public class EnemyAI : MonoBehaviour
 
         // Code that runs after the delay
         animationTriggered = false;
-        Debug.Log("animationtriggered set to true");
+        //Debug.Log("animationtriggered set to true");
     }
 
     public void RunAfterDelay2()
@@ -183,7 +183,7 @@ public class EnemyAI : MonoBehaviour
 
         // Code that runs after the delay
         animation2Triggered = false;
-        Debug.Log("animation2triggered set to true");
+        //Debug.Log("animation2triggered set to true");
     }
 
 

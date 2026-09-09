@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     public GameObject cylinder2;
     public GameObject cylinder3;
     public GameObject cylinder4;
+    public float cyl1;
     
     void Start()
     {
@@ -20,23 +21,36 @@ public class Health : MonoBehaviour
             objcurrentHealth = 100f;
          }
         
-        float cyl1 = cylinder1.GetComponent<ColorChanger>().value = (objcurrentHealth/100f);
 
-
-        if (objcurrentHealth > 75f) 
+        if (objcurrentHealth < 90f)
         {
-            cylinder2.GetComponent<ColorChanger>().value = ((cyl1 - 0.25f));
+            cylinder1.GetComponent<ColorChanger>().value = (.75f);
+        }
+        
+
+        if (objcurrentHealth < 75f) 
+        {
+            cylinder1.GetComponent<ColorChanger>().value = (.5f);
+            cylinder2.GetComponent<ColorChanger>().value = (.5f);
+            cylinder3.GetComponent<ColorChanger>().value = (.75f);
+            cylinder4.GetComponent<ColorChanger>().value = (.75f);
         }
 
 
-        if (objcurrentHealth > 50f)
+        if (objcurrentHealth < 50f)
         {
-            cylinder3.GetComponent<ColorChanger>().value = ((cyl1 - 0.5f));
+            cylinder1.GetComponent<ColorChanger>().value = (.3f);
+            cylinder3.GetComponent<ColorChanger>().value = (.3f);
+            cylinder2.GetComponent<ColorChanger>().value = (.3f);
+            cylinder4.GetComponent<ColorChanger>().value = (.5f);
         }
 
-        if (objcurrentHealth > 25f)
+        if (objcurrentHealth < 25f)
         {
-            cylinder4.GetComponent<ColorChanger>().value = ((cyl1 - 0.75f));
+            cylinder1.GetComponent<ColorChanger>().value = (0f);
+            cylinder3.GetComponent<ColorChanger>().value = (0f);
+            cylinder2.GetComponent<ColorChanger>().value = (0f);
+            cylinder4.GetComponent<ColorChanger>().value = (0f);
         }
     }
 
@@ -45,6 +59,7 @@ public class Health : MonoBehaviour
         //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.CompareTag("PlayerBullet")) {
             TakeDamage(1);
+            //cyl1 += 0.01f;
         }
     }
 

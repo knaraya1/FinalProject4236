@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             groundedTimer = 0.1f;
-            Debug.Log("grounded");
+            //Debug.Log("grounded");
         } // small buffer window
         else
             groundedTimer -= Time.deltaTime;
