@@ -68,6 +68,7 @@ public class Health : MonoBehaviour
         //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.CompareTag("PlayerBullet")) {
             TakeDamage(1);
+            Destroy(other.gameObject);
             //cyl1 += 0.01f;
         }
     }

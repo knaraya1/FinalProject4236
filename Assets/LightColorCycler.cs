@@ -43,7 +43,7 @@ public class LightColorCycler : MonoBehaviour
             {
                 index = 0;
             }
-        Debug.Log(index);
+        //bug.Log(index);
 
        // while (true)
        // {

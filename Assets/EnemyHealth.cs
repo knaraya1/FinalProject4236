@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 50;
-    private int currentHealth;
+    public float maxHealth;
+    public float currentHealth;
     public GameObject Manager;
     public GameObject prefabToSpawn;   // The object you want to spawn
     public Transform spawnPoint;
@@ -13,25 +13,25 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
-
+    
     void OnTriggerEnter(Collider other)
     {
         // Check if the collider belongs to a player bullet
         if (other.CompareTag("PlayerBullet"))
         {
-            TakeDamage(20); // subtract 20 health (change as needed)
+            TakeDamage(1f); // subtract 20 health (change as needed)
 
             // Destroy the bullet so it doesn't hit multiple times
             Destroy(other.gameObject);
         }
     }
 
-    void TakeDamage(int amount)
+    void TakeDamage(float amount)
     {
         currentHealth -= amount;
         Debug.Log("Enemy Health: " + currentHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0f)
         {
             Die();
         }

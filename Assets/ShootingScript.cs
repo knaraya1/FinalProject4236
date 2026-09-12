@@ -30,7 +30,7 @@ public class ShootingScript : MonoBehaviour
         // Give the bullet forward velocity
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = spawn.forward * bulletSpeed;
-        Debug.Log("shot");
+        //Debug.Log("shot");
     }
      public void UseAbility()
     {
