@@ -3,7 +3,8 @@ using System.Collections;
 
 public class SimpleSpawner : MonoBehaviour
 {
-    public GameObject prefabToSpawn;   // The object/prefab you want to spawn
+    public GameObject prefabToSpawn;
+    public GameObject prefabToSpawn2;   // The object/prefab you want to spawn
     public Transform[] spawnPoints;
     public int numEnemies1;
     public int numStars;
@@ -35,7 +36,14 @@ public class SimpleSpawner : MonoBehaviour
         int index = Random.Range(0, spawnPoints.Length);
 
         // Spawn the prefab at the chosen location
-        Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+        if (numEnemies1 % 2 == 1) 
+        {
+            Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+        }
+        else 
+        {
+            Instantiate(prefabToSpawn2, spawnPoints[index].position, spawnPoints[index].rotation);
+        }
         numEnemies1 += 1;
     }
     public void CallWithDelay()

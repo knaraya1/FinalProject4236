@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 6f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
+    public bool canMove = true;
 
     public Transform cameraTransform;
     private CharacterController controller;
@@ -25,7 +26,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         LookAround();
-        MovePlayer();
+        if (canMove == true)
+        {
+            MovePlayer();
+        }
+        
 
        // if (controller.isGrounded) {
        //     Debug.Log("Is grounded");
