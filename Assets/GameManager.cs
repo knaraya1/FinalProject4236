@@ -25,7 +25,7 @@ public class SimpleSpawner : MonoBehaviour
     {
         CallWithDelay();
         
-        if (numEnemies1 <= 3) {
+        if (numEnemies1 <= 5) {
             SpawnObject();
         }
     }
