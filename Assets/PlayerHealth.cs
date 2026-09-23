@@ -4,15 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth = 100f;
+    public float maxHealth = 1000f;
     public float currentHealth;
     public PlayerController scr;
     public GameObject targetobj1;
     public GameObject targetobj2;
+    public GameObject menuman;
+    public GameObject menuman2;
+    public GameObject managerobj;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
     }
 
     void OnTriggerEnter(Collider other)
@@ -62,5 +65,21 @@ public class PlayerHealth : MonoBehaviour
         Destroy(gameObject);
         SceneManager.LoadScene("TitleScreen");
         Debug.Log("5 seconds passed — action executed!");
+    }
+    public void AddHealth() 
+    {
+        SimpleSpawner msmth = managerobj.GetComponent<SimpleSpawner>();
+
+        if ((msmth.numStars >= 1) && (currentHealth <= (maxHealth*.9)))
+        {
+            currentHealth += 100f;
+            msmth.numStars -= 1;
+            menuman.SetActive(false);
+            SimpleMenu msmth2 = menuman2.GetComponent<SimpleMenu>();
+            msmth2.isActive = true;
+
+
+        }
+       
     }
 }

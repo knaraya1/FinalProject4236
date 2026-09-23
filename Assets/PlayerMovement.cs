@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
     public bool canMove = true;
+    public GameObject managerobj;
+    public SimpleMenu managerscr;
 
     public Transform cameraTransform;
     private CharacterController controller;
@@ -18,18 +20,26 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-
+        
         // Lock cursor to center of screen
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        LookAround();
-        if (canMove == true)
+        //Cursor.lockState = CursorLockMode.Locked;
+        SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
+        if (managerscr.isActive == true) 
         {
-            MovePlayer();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            LookAround();
+            //if (canMove == true)
+            //{
+            
+            //}
         }
+        MovePlayer();
         
 
        // if (controller.isGrounded) {
@@ -54,12 +64,17 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        float x = Input.GetAxis("Horizontal"); // A/D
-        float z = Input.GetAxis("Vertical");   // W/S
-        
+        SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
+        //if ((canMove == true) && )
+        if (managerscr.isActive == true)
+        {
+            float x = Input.GetAxis("Horizontal"); // A/D
+            float z = Input.GetAxis("Vertical");   // W/S
+            Vector3 move = transform.right * x + transform.forward * z;
+            controller.Move(move * moveSpeed * Time.deltaTime);
+        }
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+        
 
         // Jumping
         if (controller.isGrounded && velocity.y < 0)
@@ -73,7 +88,7 @@ public class PlayerController : MonoBehaviour
         else
             groundedTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space) && groundedTimer > 0f)
+        if (Input.GetKeyDown(KeyCode.Space) && groundedTimer > 0f && managerscr.isActive  == true)
         {
             Debug.Log("jumping");                                   
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
