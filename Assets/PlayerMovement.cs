@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         //Cursor.lockState = CursorLockMode.Locked;
         SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
-        if (managerscr.isActive == true) 
+        if (managerscr.isActive == true && canMove == true) 
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
         //if ((canMove == true) && )
-        if (managerscr.isActive == true)
+        if (managerscr.isActive == true && canMove == true)
         {
             float x = Input.GetAxis("Horizontal"); // A/D
             float z = Input.GetAxis("Vertical");   // W/S
