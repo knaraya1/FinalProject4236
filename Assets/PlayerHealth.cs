@@ -70,9 +70,9 @@ public class PlayerHealth : MonoBehaviour
     {
         SimpleSpawner msmth = managerobj.GetComponent<SimpleSpawner>();
 
-        if ((msmth.numStars >= 1) && (currentHealth <= (maxHealth*.9)))
+        if ((msmth.numStars >= 1) && (currentHealth <= (maxHealth*.7)))
         {
-            currentHealth += 100f;
+            currentHealth += 300f;
             msmth.numStars -= 1;
             menuman.SetActive(false);
             SimpleMenu msmth2 = menuman2.GetComponent<SimpleMenu>();

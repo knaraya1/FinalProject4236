@@ -25,7 +25,7 @@ public class SimpleSpawner : MonoBehaviour
     {
         CallWithDelay();
         
-        if (numEnemies1 <= 5) {
+        if (numEnemies1 <= 10) {
             SpawnObject();
         }
     }
@@ -34,9 +34,9 @@ public class SimpleSpawner : MonoBehaviour
     {
         // Generate a random number between 0 and the number of spawn points
         int index = Random.Range(0, spawnPoints.Length);
-
+        int index2 = Random.Range(0, 4);
         // Spawn the prefab at the chosen location
-        if (numEnemies1 % 2 == 1) 
+        if (index2 <= 1) 
         {
             Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
         }

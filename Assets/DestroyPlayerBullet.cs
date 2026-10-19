@@ -11,7 +11,7 @@ public class DestroyOnCollision2 : MonoBehaviour
     //}
     void OnTriggerEnter(Collider other)
     {
-        if (!(other.CompareTag("Player") || other.CompareTag("collectible2"))) 
+        if (!(other.CompareTag("Player") || !other.CompareTag("PlayerBullet") || !other.CompareTag("FirePoint"))) 
         {
             Destroy(gameObject);
         }
