@@ -8,6 +8,19 @@ public class SimpleSpawner : MonoBehaviour
     public Transform[] spawnPoints;
     public int numEnemies1;
     public int numStars;
+    public bool Loc1LOS;
+    public bool Loc2LOS;
+    public bool Loc3LOS;
+    public bool Loc4LOS;
+
+    [System.Serializable]
+    public class SpawnLocation
+    {
+        public bool active;
+        public Transform spawnPoint;
+    }
+
+    public SpawnLocation[] locations;
 
 
     public float delayTime = 01f;      // time before the action runs
@@ -34,20 +47,42 @@ public class SimpleSpawner : MonoBehaviour
 
     void SpawnObject()
     {
+        Debug.Log("numenemies1: " + numEnemies1);
         // Generate a random number between 0 and the number of spawn points
         int index = Random.Range(0, spawnPoints.Length);
-        int index2 = Random.Range(0, 4);
+        float index2 = Random.Range(0f, 4f);
         // Spawn the prefab at the chosen location
-        if (index2 <= 1) 
+        if (index2 <= 2.5f) 
         {
-            Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+            Debug.Log(index2);
+            //Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+
+            for (int i = 0; i < locations.Length; i++)
+            {
+                if (locations[i].active)
+                {
+                    Debug.Log("Using spawn point: " + locations[i].spawnPoint.name);
+                    numEnemies1 += 1;
+                    //Debug.Log("Spawned. numenemies1: " + numEnemies1);
+                    Instantiate(prefabToSpawn, locations[i].spawnPoint.position, spawnPoints[index].rotation);
+                }
+            }
         }
         else 
         {
-            Instantiate(prefabToSpawn2, spawnPoints[index].position, spawnPoints[index].rotation);
+            //Instantiate(prefabToSpawn2, spawnPoints[index].position, spawnPoints[index].rotation);
+            for (int i = 0; i < locations.Length; i++)
+            {
+                if (locations[i].active)
+                {
+                    Debug.Log("Using spawn point: " + locations[i].spawnPoint.name);
+                    numEnemies1 += 1;
+                    //Debug.Log("Spawned. numenemies1: " + numEnemies1);
+                    Instantiate(prefabToSpawn2, locations[i].spawnPoint.position, spawnPoints[index].rotation);
+                }
+            }
         }
-        numEnemies1 += 1;
-        Debug.Log("Spawned. numenemies1: " + numEnemies1);
+        
     }
     public void CallWithDelay()
     {
@@ -63,7 +98,7 @@ public class SimpleSpawner : MonoBehaviour
 
         // Wait before executing the command
         yield return new WaitForSeconds(delayTime);
-        Debug.Log("numenemies1: " + numEnemies1);
+        
 
         if (numEnemies1 <= 10) {
             SpawnObject();

@@ -12,7 +12,7 @@ public class TransformScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (child1.activeSelf) 
+        if (child1.activeSelf && child1 != null) 
         {
             this.transform.localPosition = new Vector3(0f, 0f, 0f);
         }
