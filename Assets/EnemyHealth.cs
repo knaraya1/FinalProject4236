@@ -13,16 +13,26 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
+
+    void Update()
+    {
+        if (currentHealth < 1f)
+        {
+            Destroy(gameObject);
+            Die();
+        }
+    }
     
     void OnTriggerEnter(Collider other)
     {
         // Check if the collider belongs to a player bullet
         if (other.CompareTag("PlayerBullet"))
         {
+            Destroy(other.gameObject);
             TakeDamage(1f); // subtract 20 health (change as needed)
 
             // Destroy the bullet so it doesn't hit multiple times
-            Destroy(other.gameObject);
+            
         }
     }
 
@@ -31,10 +41,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
         Debug.Log("Enemy Health: " + currentHealth);
 
-        if (currentHealth <= 0f)
-        {
-            Die();
-        }
+        
     }
 
     void Die()
@@ -45,10 +52,10 @@ public class EnemyHealth : MonoBehaviour
         SimpleSpawner i = Manager.GetComponent<SimpleSpawner>();
         i.numEnemies1 -= 1;
         Vector3 pos = spawnPoint.position;
-        pos.y = 5.5f;
-
+        //pos.y = 5.5f;
+        
         Instantiate(prefabToSpawn, pos, enemyTransform.rotation);
-        Destroy(gameObject);
+        
         //i.numStars += 1;
     }
 }

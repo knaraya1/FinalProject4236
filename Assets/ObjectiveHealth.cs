@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     public GameObject cylinder3;
     public GameObject cylinder4;
     public float cyl1;
+    public GameObject menumanager;
     
     void Start()
     {
@@ -21,7 +22,7 @@ public class Health : MonoBehaviour
             objcurrentHealth = 100f;
         }
 
-        if (objcurrentHealth < 100)
+        if (objcurrentHealth < 100f)
         {
             cylinder1.GetComponent<ColorChanger>().value = (1f);
             cylinder2.GetComponent<ColorChanger>().value = (1f);
@@ -67,7 +68,7 @@ public class Health : MonoBehaviour
     {
         //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.CompareTag("PlayerBullet")) {
-            TakeDamage(1);
+            TakeDamage(0.1f);
             Destroy(other.gameObject);
             //cyl1 += 0.01f;
         }
@@ -89,10 +90,12 @@ public class Health : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " died!");
-        Destroy(gameObject);
         Destroy(cylinder1);
         Destroy(cylinder2);
         Destroy(cylinder3);
         Destroy(cylinder4);
+        menumanager.GetComponent<EndGame>().activateObject = true;
+        Destroy(gameObject);
+
     }
 }

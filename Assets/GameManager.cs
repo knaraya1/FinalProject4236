@@ -10,8 +10,8 @@ public class SimpleSpawner : MonoBehaviour
     public int numStars;
 
 
-    public float delayTime = 2f;      // time before the action runs
-    public float cooldownTime = 3f;   // time before it can run again
+    public float delayTime = 01f;      // time before the action runs
+    public float cooldownTime = 0.01f;   // time before it can run again
 
     private bool onCooldown = false;
            // Where it should appear
@@ -19,15 +19,17 @@ public class SimpleSpawner : MonoBehaviour
     void Start()
     {
         SpawnObject();
+        SpawnObject();
+        SpawnObject();
+        SpawnObject();
+        
+        
     }
 
     void Update()
     {
         CallWithDelay();
         
-        if (numEnemies1 <= 10) {
-            SpawnObject();
-        }
     }
 
     void SpawnObject()
@@ -45,6 +47,7 @@ public class SimpleSpawner : MonoBehaviour
             Instantiate(prefabToSpawn2, spawnPoints[index].position, spawnPoints[index].rotation);
         }
         numEnemies1 += 1;
+        Debug.Log("Spawned. numenemies1: " + numEnemies1);
     }
     public void CallWithDelay()
     {
@@ -61,6 +64,10 @@ public class SimpleSpawner : MonoBehaviour
         // Wait before executing the command
         yield return new WaitForSeconds(delayTime);
         Debug.Log("numenemies1: " + numEnemies1);
+
+        if (numEnemies1 <= 10) {
+            SpawnObject();
+        }
 
         // Wait for cooldown
         yield return new WaitForSeconds(cooldownTime);

@@ -16,6 +16,6 @@ public class DisplayValue : MonoBehaviour
     {
         SimpleSpawner comp = Manager.GetComponent<SimpleSpawner>();
         myValue = comp.numStars;
-        valueText.text = "Stars: " + myValue.ToString("0") + "/50";
+        valueText.text = "Stars: " + myValue.ToString("0");
     }
 }

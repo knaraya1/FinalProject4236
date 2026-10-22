@@ -40,16 +40,17 @@ public class Pickup : MonoBehaviour
         {
             GameObject obj = GameObject.FindGameObjectWithTag("Manager");
             SimpleSpawner objScript = obj.GetComponent<SimpleSpawner>();
-            objScript.numStars += 1;
+            
             Debug.Log("Stars: " + objScript.numStars);
             // Instantiate the particle effect
-            if (particleEffectPrefab != null)
-            {
-                Instantiate(particleEffectPrefab, transform.position, Quaternion.identity);
-            }
+           // if (particleEffectPrefab != null)
+           // {
+           //     Instantiate(particleEffectPrefab, transform.position, Quaternion.identity);
+           // }
 
             // Destroy the star
             Destroy(gameObject);
+            objScript.numStars += 1;
 
         }
     }
