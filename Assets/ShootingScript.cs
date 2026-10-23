@@ -20,6 +20,7 @@ public class ShootingScript : MonoBehaviour
     public GameObject menuman2;
     public GameObject managerobj;
     public GameObject mbutton;
+    public GameObject crosshair;
     private bool onCooldown = false;     // Optional: where the bullet spawns
 
     void Update()
@@ -111,6 +112,7 @@ public class ShootingScript : MonoBehaviour
             menuman.SetActive(false);
             SimpleMenu msmth2 = menuman2.GetComponent<SimpleMenu>();
             msmth2.isActive = true;
+            crosshair.SetActive(true);
             mbutton.SetActive(false);
 
 

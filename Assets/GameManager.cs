@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SimpleSpawner : MonoBehaviour
 {
@@ -24,9 +25,11 @@ public class SimpleSpawner : MonoBehaviour
 
 
     public float delayTime = 01f;      // time before the action runs
-    public float cooldownTime = 0.01f;   // time before it can run again
+    public float cooldownTime = 01f;   // time before it can run again
 
     private bool onCooldown = false;
+    public GameObject[] enemies;
+    //public int numEnemies1;
            // Where it should appear
 
     void Start()
@@ -42,46 +45,78 @@ public class SimpleSpawner : MonoBehaviour
     void Update()
     {
         CallWithDelay();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //GameObject[] enemies2 = GameObject.FindGameObjectWithTag("")
+        numEnemies1 = enemies.Length;
+
+        //
         
     }
 
     void SpawnObject()
     {
         Debug.Log("numenemies1: " + numEnemies1);
+        
         // Generate a random number between 0 and the number of spawn points
         int index = Random.Range(0, spawnPoints.Length);
         float index2 = Random.Range(0f, 4f);
         // Spawn the prefab at the chosen location
-        if (index2 <= 2.5f) 
+        if (index2 <= 2f) 
         {
-            Debug.Log(index2);
+           // Debug.Log(index2);
             //Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+
+            List<int> freeLocations = new List<int>();
 
             for (int i = 0; i < locations.Length; i++)
             {
                 if (locations[i].active)
                 {
-                    Debug.Log("Using spawn point: " + locations[i].spawnPoint.name);
-                    numEnemies1 += 1;
-                    //Debug.Log("Spawned. numenemies1: " + numEnemies1);
-                    Instantiate(prefabToSpawn, locations[i].spawnPoint.position, spawnPoints[index].rotation);
+                    freeLocations.Add(i);
                 }
+            }
+
+            if (freeLocations.Count > 0)
+            {
+                int randomIndex = Random.Range(0, freeLocations.Count);
+                int locationIndex = freeLocations[randomIndex];
+
+                Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
+
+                Instantiate(
+                    prefabToSpawn,
+                    locations[locationIndex].spawnPoint.position,
+                    locations[locationIndex].spawnPoint.rotation
+                );
             }
         }
         else 
         {
-            //Instantiate(prefabToSpawn2, spawnPoints[index].position, spawnPoints[index].rotation);
+            List<int> freeLocations = new List<int>();
+
             for (int i = 0; i < locations.Length; i++)
             {
                 if (locations[i].active)
                 {
-                    Debug.Log("Using spawn point: " + locations[i].spawnPoint.name);
-                    numEnemies1 += 1;
-                    //Debug.Log("Spawned. numenemies1: " + numEnemies1);
-                    Instantiate(prefabToSpawn2, locations[i].spawnPoint.position, spawnPoints[index].rotation);
+                    freeLocations.Add(i);
                 }
             }
+
+            if (freeLocations.Count > 0)
+            {
+                int randomIndex = Random.Range(0, freeLocations.Count);
+                int locationIndex = freeLocations[randomIndex];
+
+                Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
+
+                Instantiate(
+                    prefabToSpawn2,
+                    locations[locationIndex].spawnPoint.position,
+                    locations[locationIndex].spawnPoint.rotation
+                );
+            }
         }
+        //numEnemies1 += 1;
         
     }
     public void CallWithDelay()

@@ -23,12 +23,14 @@ public class LineOfSightChecker2 : MonoBehaviour
         {
             if (hit.transform == target)
             {
+                managerobj.GetComponent<SimpleSpawner>().locations[1].active = false;
                 CallWithDelay();
             }
-           // else
-           // {
-           //     Debug.Log("Line of sight blocked by: " + hit.collider.name);
-           // }
+            else
+            {
+                //Debug.Log("Line of sight blocked by: " + hit.collider.name);
+                 managerobj.GetComponent<SimpleSpawner>().locations[1].active = true;
+            }
         }
     }
     public void CallWithDelay()

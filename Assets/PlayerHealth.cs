@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public GameObject menuman;
     public GameObject menuman2;
     public GameObject managerobj;
+    public GameObject crosshair;
 
     void Start()
     {
@@ -76,6 +77,7 @@ public class PlayerHealth : MonoBehaviour
             msmth.numStars -= 1;
             menuman.SetActive(false);
             SimpleMenu msmth2 = menuman2.GetComponent<SimpleMenu>();
+            crosshair.SetActive(true);
             msmth2.isActive = true;
 
 
