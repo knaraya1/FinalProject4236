@@ -38,6 +38,21 @@ public class EnemyAI : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         Wander();
+
+        GameObject playerObj = GameObject.FindWithTag("Player");
+
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+
+        GameObject HomePos1Obj = GameObject.FindWithTag("HomePos1");
+
+      //  if (HomePos1Obj != null)
+       // {
+            homePosition = HomePos1Obj.transform;
+       // }
+
     }
 
     void Update()
