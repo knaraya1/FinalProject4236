@@ -2,42 +2,35 @@ using UnityEngine;
 
 public class DestroyOnCollision2 : MonoBehaviour
 {
-   // void OnCollisionEnter(Collision collision)
-   // {
-    //    if (!collider.CompareTag("Player") && !collider.other.CompareTag("collectible2")) 
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
-    void OnTriggerEnter(Collider other)
-    {
-        if (!(other.CompareTag("Player") || !other.CompareTag("PlayerBullet") || !other.CompareTag("FirePoint"))) 
-        {
-            Destroy(gameObject);
-        }
-       
-    }
+    [SerializeField] LayerMask hitLayers;
+    public GameObject bullet;
+   
     void Update()
     {
-        float speed = 5f;
+        float speed = 60f;
+
         Vector3 oldPos = transform.position;
-        transform.position += transform.forward * speed * Time.deltaTime;
+        Vector3 movement = transform.forward * speed * Time.deltaTime;
 
         RaycastHit hit;
-        Vector3 direction = transform.position - oldPos;
 
-        if (Physics.Raycast(oldPos, direction.normalized,
-            out hit, direction.magnitude))
+        if (Physics.Raycast(
+            oldPos,
+            movement.normalized,
+            out hit,
+            movement.magnitude,
+            hitLayers))
         {
-            Debug.Log("Hit wall!");
+            transform.position = hit.point;
+
+            Debug.Log("Hit " + hit.collider.name);
+
             Destroy(gameObject);
+            return;
         }
+        
+
+        transform.position += movement;
     }
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!(collision.collider.CompareTag("Player") || !collision.collider.CompareTag("PlayerBullet") || !collision.collider.CompareTag("FirePoint"))) 
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
+ 
 }

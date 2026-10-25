@@ -45,8 +45,8 @@ public class ShootingScript : MonoBehaviour
         Transform player6 = playerObj.transform;
 
         GameObject bullet = Instantiate(bulletPrefab, spawn.position, firePoint.rotation);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = spawn.forward * bulletSpeed;
+       // Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        //rb.linearVelocity = spawn.forward * bulletSpeed;
         if (multishot == true)
         {
             GameObject bullet0 = Instantiate(bulletPrefab, spawn0.position, firePointxtra.rotation);
@@ -56,23 +56,23 @@ public class ShootingScript : MonoBehaviour
             GameObject bullet4 = Instantiate(bulletPrefab, spawn4.position, firePointxtra4.rotation);
             GameObject bullet5 = Instantiate(bulletPrefab, spawn5.position, firePointxtra5.rotation);
 
-            Rigidbody rb0 = bullet0.GetComponent<Rigidbody>();
-            rb0.linearVelocity = spawn0.forward * bulletSpeed;
+            //Rigidbody rb0 = bullet0.GetComponent<Rigidbody>();
+            //rb0.linearVelocity = spawn0.forward * bulletSpeed;
 
-            Rigidbody rb1 = bullet1.GetComponent<Rigidbody>();
-            rb1.linearVelocity = spawn1.forward * bulletSpeed;
+            //Rigidbody rb1 = bullet1.GetComponent<Rigidbody>();
+            //rb1.linearVelocity = spawn1.forward * bulletSpeed;
 
-            Rigidbody rb2 = bullet2.GetComponent<Rigidbody>();
-            rb2.linearVelocity = spawn2.forward * bulletSpeed;
+            //Rigidbody rb2 = bullet2.GetComponent<Rigidbody>();
+            //rb2.linearVelocity = spawn2.forward * bulletSpeed;
 
-            Rigidbody rb3 = bullet3.GetComponent<Rigidbody>();
-            rb3.linearVelocity = spawn3.forward * bulletSpeed;
+           // Rigidbody rb3 = bullet3.GetComponent<Rigidbody>();
+           // rb3.linearVelocity = spawn3.forward * bulletSpeed;
 
-            Rigidbody rb4 = bullet4.GetComponent<Rigidbody>();
-            rb4.linearVelocity = spawn4.forward * bulletSpeed;
+            //Rigidbody rb4 = bullet4.GetComponent<Rigidbody>();
+            //rb4.linearVelocity = spawn4.forward * bulletSpeed;
 
-            Rigidbody rb5 = bullet5.GetComponent<Rigidbody>();
-            rb5.linearVelocity = spawn5.forward * bulletSpeed;
+            //Rigidbody rb5 = bullet5.GetComponent<Rigidbody>();
+           // rb5.linearVelocity = spawn5.forward * bulletSpeed;
            // Instantiate(bullet, spawn.position, firePointxtra.rotation);
         }
         // Give the bullet forward velocity

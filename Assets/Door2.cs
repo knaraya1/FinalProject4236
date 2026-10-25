@@ -5,6 +5,7 @@ public class Door2 : MonoBehaviour
     public Animator animator;          // The object's Animator
     public string animationTrigger = "Wall18AnimTrigger";  
     private bool playerNearby = false;
+    public GameObject managerobj;
     //public GameObject objectToActivate;
 
     void OnTriggerEnter(Collider other)
@@ -21,7 +22,8 @@ public class Door2 : MonoBehaviour
 
     void Update()
     {
-        if (playerNearby && Input.GetKeyDown(KeyCode.E))
+        EndGame i = managerobj.GetComponent<EndGame>();
+        if (playerNearby && Input.GetKeyDown(KeyCode.E) && i.unlockgate)
         {
             animator.SetTrigger(animationTrigger);
            // objectToActivate.SetActive(true);

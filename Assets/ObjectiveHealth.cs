@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     public GameObject cylinder4;
     public float cyl1;
     public GameObject menumanager;
+    public float damageAmount;
     
     void Start()
     {
@@ -68,7 +69,7 @@ public class Health : MonoBehaviour
     {
         //Debug.Log("Collided with: " + other.gameObject.name);
         if (other.CompareTag("PlayerBullet")) {
-            TakeDamage(0.1f);
+            TakeDamage(damageAmount);
             Destroy(other.gameObject);
             //cyl1 += 0.01f;
         }

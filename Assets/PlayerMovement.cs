@@ -64,38 +64,35 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
-        //if ((canMove == true) && )
-        if (managerscr.isActive == true && canMove == true)
+                SimpleMenu managerscr = managerobj.GetComponent<SimpleMenu>();
+       // if (managerscr.isActive && canMove)
+       // {
+
+            Vector3 move = Vector3.zero;
+
+        if (managerscr.isActive && canMove)
         {
-            float x = Input.GetAxis("Horizontal"); // A/D
-            float z = Input.GetAxis("Vertical");   // W/S
-            Vector3 move = transform.right * x + transform.forward * z;
-            controller.Move(move * moveSpeed * Time.deltaTime);
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+            move = transform.right * x + transform.forward * z;
         }
 
-        
-
-        // Jumping
         if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f; // small downward force to keep grounded
-
-        if (controller.isGrounded)
         {
-            groundedTimer = 0.1f;
-            //Debug.Log("grounded");
-        } // small buffer window
-        else
-            groundedTimer -= Time.deltaTime;
+            velocity.y = -2f;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && groundedTimer > 0f && managerscr.isActive  == true)
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
         {
-            Debug.Log("jumping");                                   
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        // Gravity
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+
+        move.y = velocity.y;
+
+        controller.Move(move * moveSpeed * Time.deltaTime);
+      //  }
     }
 }

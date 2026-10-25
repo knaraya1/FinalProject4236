@@ -29,6 +29,8 @@ public class SimpleSpawner : MonoBehaviour
 
     private bool onCooldown = false;
     public GameObject[] enemies;
+    public GameObject managerobj;
+    public EndGame scr;
     //public int numEnemies1;
            // Where it should appear
 
@@ -44,6 +46,7 @@ public class SimpleSpawner : MonoBehaviour
 
     void Update()
     {
+        scr = managerobj.GetComponent<EndGame>();
         CallWithDelay();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         //GameObject[] enemies2 = GameObject.FindGameObjectWithTag("")
@@ -55,67 +58,71 @@ public class SimpleSpawner : MonoBehaviour
 
     void SpawnObject()
     {
-        Debug.Log("numenemies1: " + numEnemies1);
-        
-        // Generate a random number between 0 and the number of spawn points
-        int index = Random.Range(0, spawnPoints.Length);
-        float index2 = Random.Range(0f, 4f);
-        // Spawn the prefab at the chosen location
-        if (index2 <= 2f) 
+        if (scr.isGameEnding == false) 
         {
-           // Debug.Log(index2);
-            //Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
-
-            List<int> freeLocations = new List<int>();
-
-            for (int i = 0; i < locations.Length; i++)
+            Debug.Log("numenemies1: " + numEnemies1);
+            
+            // Generate a random number between 0 and the number of spawn points
+            int index = Random.Range(0, spawnPoints.Length);
+            float index2 = Random.Range(0f, 4f);
+            // Spawn the prefab at the chosen location
+            if (index2 <= 2f) 
             {
-                if (locations[i].active)
+            // Debug.Log(index2);
+                //Instantiate(prefabToSpawn, spawnPoints[index].position, spawnPoints[index].rotation);
+
+                List<int> freeLocations = new List<int>();
+
+                for (int i = 0; i < locations.Length; i++)
                 {
-                    freeLocations.Add(i);
+                    if (locations[i].active)
+                    {
+                        freeLocations.Add(i);
+                    }
+                }
+
+                if (freeLocations.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, freeLocations.Count);
+                    int locationIndex = freeLocations[randomIndex];
+
+                    Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
+
+                    Instantiate(
+                        prefabToSpawn,
+                        locations[locationIndex].spawnPoint.position,
+                        locations[locationIndex].spawnPoint.rotation
+                    );
                 }
             }
-
-            if (freeLocations.Count > 0)
+            else 
             {
-                int randomIndex = Random.Range(0, freeLocations.Count);
-                int locationIndex = freeLocations[randomIndex];
+                List<int> freeLocations = new List<int>();
 
-                Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
-
-                Instantiate(
-                    prefabToSpawn,
-                    locations[locationIndex].spawnPoint.position,
-                    locations[locationIndex].spawnPoint.rotation
-                );
-            }
-        }
-        else 
-        {
-            List<int> freeLocations = new List<int>();
-
-            for (int i = 0; i < locations.Length; i++)
-            {
-                if (locations[i].active)
+                for (int i = 0; i < locations.Length; i++)
                 {
-                    freeLocations.Add(i);
+                    if (locations[i].active)
+                    {
+                        freeLocations.Add(i);
+                    }
+                }
+
+                if (freeLocations.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, freeLocations.Count);
+                    int locationIndex = freeLocations[randomIndex];
+
+                    Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
+
+                    Instantiate(
+                        prefabToSpawn2,
+                        locations[locationIndex].spawnPoint.position,
+                        locations[locationIndex].spawnPoint.rotation
+                    );
                 }
             }
-
-            if (freeLocations.Count > 0)
-            {
-                int randomIndex = Random.Range(0, freeLocations.Count);
-                int locationIndex = freeLocations[randomIndex];
-
-                Debug.Log("Using spawn point: " + locations[locationIndex].spawnPoint.name);
-
-                Instantiate(
-                    prefabToSpawn2,
-                    locations[locationIndex].spawnPoint.position,
-                    locations[locationIndex].spawnPoint.rotation
-                );
-            }
         }
+
         //numEnemies1 += 1;
         
     }
