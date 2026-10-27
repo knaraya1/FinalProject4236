@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     public GameObject cylinder2;
     public GameObject cylinder3;
     public GameObject cylinder4;
+
+    public GameObject cylinder5;
     public float cyl1;
     public GameObject menumanager;
     public float damageAmount;
@@ -95,6 +97,7 @@ public class Health : MonoBehaviour
         Destroy(cylinder2);
         Destroy(cylinder3);
         Destroy(cylinder4);
+        Destroy(cylinder5);
         menumanager.GetComponent<EndGame>().activateObject = true;
         Destroy(gameObject);
 

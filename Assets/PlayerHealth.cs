@@ -13,10 +13,22 @@ public class PlayerHealth : MonoBehaviour
     public GameObject menuman2;
     public GameObject managerobj;
     public GameObject crosshair;
+    public float healovertimeamount;
+    public bool healovertime = false;
+
+    private bool onCooldown = false;
 
     void Start()
     {
         //currentHealth = maxHealth;
+    }
+
+    void Update()
+    {
+        if (healovertime = true && currentHealth <= 1000)
+        {
+            DoThing();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -79,9 +91,34 @@ public class PlayerHealth : MonoBehaviour
             SimpleMenu msmth2 = menuman2.GetComponent<SimpleMenu>();
             crosshair.SetActive(true);
             msmth2.isActive = true;
+            healovertimeamount += 5;
 
 
         }
        
+    }
+
+    public void DoThing()
+    {
+        if (!onCooldown)
+        {
+            StartCoroutine(DoThingCoroutine());
+        }
+    }
+
+    private IEnumerator DoThingCoroutine()
+    {
+        onCooldown = true;
+
+        // Delay
+        //yield return new WaitForSeconds(1f);
+
+        Debug.Log("Action executed(health)!");
+        currentHealth += healovertimeamount;
+
+        // Cooldown
+        yield return new WaitForSeconds(1f);
+
+        onCooldown = false;
     }
 }

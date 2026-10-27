@@ -14,13 +14,13 @@ public class SimpleMenu : MonoBehaviour
 
             isActive = menuPanel.activeSelf;
             menuPanel.SetActive(!isActive);
-            crosshair.SetActive(!(crosshair.activeSelf));
+            crosshair.SetActive(isActive);
         }
         if (!(isActive))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            //crosshair.SetActive(!(menuPanel.activeSelf));
+            //crosshair.SetActive(!isActive);
             
         }
     }

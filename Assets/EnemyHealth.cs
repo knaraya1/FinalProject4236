@@ -50,12 +50,17 @@ public class EnemyHealth : MonoBehaviour
         
 
         SimpleSpawner i = Manager.GetComponent<SimpleSpawner>();
-       // i.numEnemies1 -= 1;
         Vector3 pos = spawnPoint.position;
-        //pos.y = 5.5f;
         
-        Instantiate(prefabToSpawn, pos, enemyTransform.rotation);
+            Instantiate(
+                prefabToSpawn,
+                pos,
+                Quaternion.Euler(
+                    90f,
+                    enemyTransform.eulerAngles.y,
+                    enemyTransform.eulerAngles.z
+                )
+            );
         
-        //i.numStars += 1;
     }
 }
