@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     public GameObject managerobj;
     public SimpleMenu managerscr;
+    public GameObject cameraobj;
 
     public Transform cameraTransform;
     private CharacterController controller;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private float xRotation = 0f;
     private Vector3 velocity;
     private float groundedTimer = 0f;
+    public float currentLeanAngle = 0f;
 
     void Start()
     {
@@ -55,8 +57,12 @@ public class PlayerController : MonoBehaviour
         // Vertical rotation (camera only)
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        
+       // if (cameraobj.GetComponent<CameraLean>().isLeaning == false) {
+        cameraTransform.localRotation =
+        Quaternion.Euler(xRotation, 0f, currentLeanAngle);
+       // }
+            
 
         // Horizontal rotation (player body)
         transform.Rotate(Vector3.up * mouseX);

@@ -23,7 +23,7 @@ public class DestroyOnCollision2 : MonoBehaviour
         {
             transform.position = hit.point;
 
-            Debug.Log("Hit " + hit.collider.name);
+            //Debug.Log("Hit " + hit.collider.name);
 
             Destroy(gameObject);
             return;

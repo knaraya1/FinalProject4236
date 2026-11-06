@@ -21,7 +21,8 @@ public class ShootingScript : MonoBehaviour
     public GameObject managerobj;
     public GameObject mbutton;
     public GameObject crosshair;
-    private bool onCooldown = false;     // Optional: where the bullet spawns
+    private bool onCooldown = false;  
+    public bool ShootingAt = false;   // Optional: where the bullet spawns
 
     void Update()
     {
@@ -34,6 +35,8 @@ public class ShootingScript : MonoBehaviour
 
     void Shoot()
     {
+        ShootingAt = true;
+        StartCoroutine(ActivateAfterDelay());
         // Spawn bullet at player's position (or firePoint if assigned) todo: put the following 6 lines under the multishot condition
         Transform spawn = firePoint.transform;
         Transform spawn0 = firePointxtra.transform;
@@ -117,5 +120,16 @@ public class ShootingScript : MonoBehaviour
 
 
         }
+    }
+
+
+
+    IEnumerator ActivateAfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
+
+        // Code to run after 5 seconds
+        //Debug.Log("Coroutine activated!");
+        ShootingAt = false;
     }
 }

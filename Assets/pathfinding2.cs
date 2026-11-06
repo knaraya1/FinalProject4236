@@ -31,6 +31,10 @@ public class EnemyAI2 : MonoBehaviour
 
     public GameObject targetObject;
     public GameObject targetObject2;
+    private NavMeshHit hit;
+    public GameObject playerobj;
+
+    //public ShootingScript shootingscript;
 
     void Start()
     {
@@ -39,11 +43,12 @@ public class EnemyAI2 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Wander();
 
-        GameObject playerObj = GameObject.FindWithTag("Player");
+        playerobj = GameObject.FindWithTag("Player");
+        
 
-        if (playerObj != null)
+        if (playerobj != null)
         {
-            player = playerObj.transform;
+            player = playerobj.transform;
         }
 
         GameObject HomePos1Obj = GameObject.FindWithTag("HomePos1");
@@ -60,7 +65,12 @@ public class EnemyAI2 : MonoBehaviour
 
         DetectPlayer();
 
-        if (playerInSight)
+        //Vector3 dirToPlayer = (player.position - transform.position).normalized;
+
+      //  float angle = Vector3.Angle(transform.forward, dirToPlayer);
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (playerInSight || playerobj.GetComponent<ShootingScript>().ShootingAt && distance <= 15f)
         {
             lostTimer = 0f;
 
@@ -72,19 +82,24 @@ public class EnemyAI2 : MonoBehaviour
         }
         else
         {
+            //Wander();
+
             lostTimer += Time.deltaTime;
 
             if (lostTimer >= lostSightTime)
             {
                 animationmethod();
 
-                //agent.SetDestination(homePosition.position);
+                //agent.SetDestination(hit.position);
+               // Wander();
             }
             else
             {
-                if (agent.remainingDistance < 1f)
+                if (agent.remainingDistance < 5f)
                     Wander();
+                    return;
             }
+            Wander();
         }
     }
 
@@ -147,7 +162,7 @@ public class EnemyAI2 : MonoBehaviour
         Vector3 randomDir = Random.insideUnitSphere * wanderRadius;
         randomDir += transform.position;
 
-        NavMeshHit hit;
+        //NavMeshHit hit;
         NavMesh.SamplePosition(randomDir, out hit, wanderRadius, NavMesh.AllAreas);
 
         agent.SetDestination(hit.position);
